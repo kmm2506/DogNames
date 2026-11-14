@@ -282,3 +282,7 @@ body {
         margin-top: 50px;
     }
 }
+
+#dogsTable{
+    border: 1px solid #17324D;
+}

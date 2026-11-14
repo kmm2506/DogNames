@@ -2,14 +2,16 @@
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viepoint" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         DogData | Данни за кучетата в България
     </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
     <header class="site-header">
         <div class="container">
 
@@ -122,5 +124,20 @@
         
     </footer>
 
+    
+
+    <input type="text" id="searchInput" placeholder="Search by name..." oninput="filterTable()">
+
+    <table id="dogsTable">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+
+   
+
+    <p id="noResults" style="display: none;">No results found.</p>
+    <script src="libs/sql-wasm-inline.js"></script>
+     <script src="index.js"></script>
 </body>
+
 </html>
