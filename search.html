@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        DogData | Търсачка
+    </title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+
+            <a href="index.html" class="logo">
+                DogData
+            </a>
+
+            <p class="header-description">
+                Публични данни за регистрираните кучета в България
+            </p>
+
+            <nav class="main-nav">
+                <a href="index.html">Начало</a>
+                <a href="analyses.html">Анализи</a>
+                <a href="search.html" class="active">Търсачка</a>
+                <a href="registration.html">Регистрация</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <input type="text" id="searchInput" placeholder="Търси по име..." oninput="filterTable()" value="">
+        <select id="municipalitySelect" onchange="filterTable()">
+            <option value="%">Всички общини</option>
+        </select>
+        <input type="text" id="addressInput" placeholder="Търси по адрес..." oninput="filterTable()" value="">
+        <input type="date" id="dateInput" placeholder="Търси по дата..." oninput="filterTable()" value="">
+        <input type="text" id="breedInput" placeholder="Търси по порода..." oninput="filterTable()" value="">
+        <select id="genderSelect" onchange="filterTable()">
+            <option value="%">Всички полове</option>
+            <option value="">Непознат</option>
+            <option value="M">Мъжки</option>
+            <option value="F">Женски</option>
+        </select>
+        <input type="text" id="ownerInput" placeholder="Търси по собственик..." oninput="filterTable()" value="">
+
+        <table id="dogsTable">
+            <thead>
+                <tr>
+                    <th>Име</th>
+                    <th>Община</th>
+                    <th>Адрес</th>
+                    <th>Регистрация</th>
+                    <th>Порода</th>
+                    <th>Пол</th>
+                    <th>Собственик</th>
+                </tr>
+            </thead>
+            <tbody id="dogsTableBody"></tbody>
+        </table>
+
+        <p id="noResults" style="display: none;">No results found.</p>
+        <script src="libs/sql-wasm-inline.js"></script>
+        <script src="scripts/search.js"></script>
+    </main>
+
+</body>
+
+</html>
