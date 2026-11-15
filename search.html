@@ -34,7 +34,7 @@
     </header>
 
     <main>
-        <input type="text" id="searchInput" placeholder="Търси по име..." oninput="filterTable()" value="">
+        <input type="text" id="nameInput" placeholder="Търси по име..." oninput="filterTable()" value="">
         <select id="municipalitySelect" onchange="filterTable()">
             <option value="%">Всички общини</option>
         </select>
@@ -42,12 +42,30 @@
         <input type="date" id="dateInput" placeholder="Търси по дата..." oninput="filterTable()" value="">
         <input type="text" id="breedInput" placeholder="Търси по порода..." oninput="filterTable()" value="">
         <select id="genderSelect" onchange="filterTable()">
-            <option value="%">Всички полове</option>
-            <option value="">Непознат</option>
+            <option value="%">Всеки пол</option>
             <option value="M">Мъжки</option>
             <option value="F">Женски</option>
         </select>
         <input type="text" id="ownerInput" placeholder="Търси по собственик..." oninput="filterTable()" value="">
+        <select id="orderBy" onchange="filterTable()">
+            <option value="name">Име</option>
+            <option value="municipality">Община</option>
+            <option value="address">Адрес</option>
+            <option value="registration_date">Дата</option>
+            <option value="gender">Порода</option>
+            <option value="gender">Пол</option>
+            <option value="owner">Собственик</option>
+        </select>
+        <input type="text" id="limitInput" placeholder="Лимит..." oninput="filterTable()" value="100">
+
+        <br>
+        Позволяване на липсващи:
+        <input type="checkbox" id="nullableName" value="name" onchange="filterTable()">
+        <input type="checkbox" id="nullableAddress" value="address" onchange="filterTable()" checked>
+        <input type="checkbox" id="nullableDate" value="registration_date" onchange="filterTable()" checked>
+        <input type="checkbox" id="nullableBreed" value="breed" onchange="filterTable()" checked>
+        <input type="checkbox" id="nullableGender" value="gender" onchange="filterTable()" checked>
+        <input type="checkbox" id="nullableOwner" value="owner" onchange="filterTable()" checked>
 
         <table id="dogsTable">
             <thead>

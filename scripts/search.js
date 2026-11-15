@@ -1,3 +1,14 @@
+let db;
+const filters = `SELECT * FROM dogs
+    WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
+    AND municipality LIKE ?
+    AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
+    AND (UNICODE_LOWER(breed) LIKE ? || '%' OR breed IS NULL)
+    AND (gender LIKE ? OR gender IS NULL)
+    AND (UNICODE_LOWER(owner) LIKE ? || '%' OR owner IS NULL)`;
+let nullables;
+loadDatabase();
+
 async function loadDatabase() {
     const SQL = await initSqlJs();
     const response = await fetch("data/data.db");
@@ -16,12 +27,12 @@ async function loadDatabase() {
             .join("");
 
     statement = db.prepare(`SELECT * FROM dogs
-        WHERE UNICODE_LOWER(name) LIKE ? || '%'
+        WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
         AND municipality LIKE ?
-        AND UNICODE_LOWER(address) LIKE '%' || ? || '%'
-        AND UNICODE_LOWER(breed) LIKE ? || '%'
+        AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
+        AND (UNICODE_LOWER(breed) LIKE ? || '%' OR breed IS NULL)
         AND (gender LIKE ? OR gender IS NULL)
-        AND UNICODE_LOWER(owner) LIKE ? || '%'
+        AND (UNICODE_LOWER(owner) LIKE ? || '%' OR owner IS NULL)
         ORDER BY name LIMIT 100`);
 }
 
@@ -42,7 +53,7 @@ function show(result) {
 }
 
 function filterTable() {
-    const name = document.getElementById("searchInput").value.toLocaleLowerCase('bg-BG');
+    const name = document.getElementById("nameInput").value.toLocaleLowerCase('bg-BG');
     const municipality = document.getElementById("municipalitySelect").value;
     const address = document.getElementById("addressInput").value.toLocaleLowerCase('bg-BG');
     const date = document.getElementById("dateInput").value;
@@ -50,16 +61,31 @@ function filterTable() {
     const gender = document.getElementById("genderSelect").value;
     const owner = document.getElementById("ownerInput").value.toLocaleLowerCase('bg-BG');
 
-    statement.reset();
-    statement.bind([name, municipality, address, breed, gender, owner]);
-    const result = [];
+    const checkboxes = [
+        document.getElementById("nullableName"),
+        document.getElementById("nullableAddress"),
+        document.getElementById("nullableDate"),
+        document.getElementById("nullableBreed"),
+        document.getElementById("nullableGender"),
+        document.getElementById("nullableOwner")
+    ];
 
+    const orderby = document.getElementById("orderBy").value;
+    const limit = document.getElementById("limitInput").value;
+
+    nullables = "";
+    checkboxes.forEach(element => {
+        if (!element.checked) {
+            nullables += `\nAND ${element.value} IS NOT NULL`;
+        }
+    });
+    const query = filters + nullables + `\nORDER BY ${orderby} LIMIT ?`;
+    const statement = db.prepare(query);
+    statement.bind([name, municipality, address, breed, gender, owner, limit]);
+
+    const result = [];
     while (statement.step()) {
         result.push(statement.get());
     }
     show(result);
 }
-
-let db;
-let statement;
-loadDatabase();
