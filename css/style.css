@@ -29,10 +29,22 @@ body {
 
 /*logo*/
 .logo{
+    display: flex;
+    align-items: center;
+    gap: 12px;
     color: #FFFFFF;
     font-size: 26px;
     font-weight: bold;
     text-decoration: none;
+}
+
+.logo img {
+
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    transform: scale(1.4);
+    transform-origin: left center;
 }
 
 /*Кратко описание до логото*/
@@ -74,31 +86,7 @@ body {
         margin-left: 0;
     }
 }
-/*Phone*/
-@media (max-width:500px){
-    .container{
-        justify-content: center;
-    }
 
-    .logo{
-        font-size: 23px;
-    }
-
-    .header-description{
-        flex-basis: 100%;
-        text-align: center;
-        margin: 0;
-    }
-
-    .main-nav{
-        gap: 5px;
-    }
-
-    .main-nav a{
-        padding: 9px 10px;
-        font-size: 13px;
-    }
-}
 
 /*navigacionni butoni*/
 .main-nav{
@@ -271,17 +259,6 @@ body {
     font-size: 12px;
 }
 
-/* АДАПТАЦИЯ НА ФУТЪРА ЗА ТЕЛЕФОНИ */
-@media (max-width: 700px) {
-    .footer-container {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .site-footer {
-        margin-top: 50px;
-    }
-}
 
 #dogsTable{
     border: 1px solid #17324D;

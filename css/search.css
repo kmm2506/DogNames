@@ -1,0 +1,221 @@
+
+/* search panel - general*/
+
+.search-page {
+    background-color: #EAF2F5;
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+}
+
+.search-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Заглавие на страницата */
+.search-heading {
+    margin-bottom: 30px;
+}
+
+.search-heading h1 {
+    color: #17324D;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.search-heading p {
+    color: #526777;
+    font-size: 16px;
+    margin: 0;
+}
+
+
+/* main layout*/
+
+.search-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+
+/* filters panel*/
+
+.filters-panel {
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+.filters-panel h2 {
+    color: #17324D;
+    font-size: 22px;
+    margin: 0 0 25px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.filter-group label {
+    color: #17324D;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #D2DEE5;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+    color: #17324D;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+    border-color: #256D85;
+    box-shadow: 0 0 0 3px rgba(37, 109, 133, 0.12);
+}
+
+
+/* nullable filters*/
+
+.nullable-filters {
+    border-top: 1px solid #E1E9ED;
+    margin-top: 25px;
+    padding-top: 20px;
+}
+
+.nullable-filters h3 {
+    color: #17324D;
+    font-size: 16px;
+    margin: 0 0 8px;
+}
+
+.nullable-filters p {
+    color: #526777;
+    font-size: 13px;
+    margin: 0 0 15px;
+}
+
+.nullable-filters label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #354D5D;
+    font-size: 14px;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.nullable-filters input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #256D85;
+    cursor: pointer;
+}
+
+
+/* results panel*/
+
+.results-panel {
+    min-width: 0;
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+.results-heading {
+    margin-bottom: 20px;
+}
+
+.results-heading h2 {
+    color: #17324D;
+    font-size: 22px;
+    margin: 0;
+}
+
+
+/* table*/
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #D2DEE5;
+    border-radius: 10px;
+}
+
+#dogsTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #354D5D;
+    font-size: 14px;
+}
+
+#dogsTable th {
+    background-color: #17324D;
+    color: #FFFFFF;
+    padding: 14px 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#dogsTable th:first-child {
+    border-top-left-radius: 7px;
+}
+
+#dogsTable th:last-child {
+    border-top-right-radius: 7px;
+}
+
+#dogsTable td {
+    padding: 13px 12px;
+    border-bottom: 1px solid #E1E9ED;
+    white-space: nowrap;
+}
+
+#dogsTable tbody tr:nth-child(even) {
+    background-color: #F5F8FA;
+}
+
+#dogsTable tbody tr:hover {
+    background-color: #EAF2F5;
+}
+
+
+/* no results message*/
+
+#noResults {
+    color: #526777;
+    text-align: center;
+    padding: 30px 10px;
+    font-size: 15px;
+}
+
+
+/* responsive design*/
+
+@media (max-width: 900px) {
+
+    .search-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-panel {
+        width: auto;
+    }
+
+}
