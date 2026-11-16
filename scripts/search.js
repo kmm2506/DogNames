@@ -3,7 +3,7 @@ const filters = `SELECT * FROM dogs
     WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
     AND municipality LIKE ?
     AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
-    AND (UNICODE_LOWER(breed) LIKE ? || '%' OR breed IS NULL)
+    AND (UNICODE_LOWER(breed) LIKE '%' || ? || '%' OR breed IS NULL)
     AND (gender LIKE ? OR gender IS NULL)
     AND (UNICODE_LOWER(owner) LIKE ? || '%' OR owner IS NULL)`;
 let nullables;
@@ -25,15 +25,6 @@ async function loadDatabase() {
         db.exec("SELECT DISTINCT municipality FROM dogs ORDER BY municipality")[0].values
             .map(row => `<option value="${row[0]}">${row[0]}</option>`)
             .join("");
-
-    statement = db.prepare(`SELECT * FROM dogs
-        WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
-        AND municipality LIKE ?
-        AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
-        AND (UNICODE_LOWER(breed) LIKE ? || '%' OR breed IS NULL)
-        AND (gender LIKE ? OR gender IS NULL)
-        AND (UNICODE_LOWER(owner) LIKE ? || '%' OR owner IS NULL)
-        ORDER BY name LIMIT 100`);
 }
 
 function show(result) {
