@@ -3,6 +3,9 @@ const filters = `SELECT * FROM dogs
     WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
     AND municipality LIKE ?
     AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
+    AND (strftime('%Y', registration_date) LIKE ? OR registration_date IS NULL)
+    AND (strftime('%m', registration_date) LIKE ? OR registration_date IS NULL)
+    AND (strftime('%d', registration_date) LIKE ? OR registration_date IS NULL)
     AND (UNICODE_LOWER(breed) LIKE '%' || ? || '%' OR breed IS NULL)
     AND (gender LIKE ? OR gender IS NULL)
     AND (UNICODE_LOWER(owner) LIKE ? || '%' OR owner IS NULL)`;
@@ -47,7 +50,9 @@ function filterTable() {
     const name = document.getElementById("nameInput").value.toLocaleLowerCase('bg-BG');
     const municipality = document.getElementById("municipalitySelect").value;
     const address = document.getElementById("addressInput").value.toLocaleLowerCase('bg-BG');
-    const date = document.getElementById("dateInput").value;
+    const day = document.getElementById("dayInput").value || "%";
+    const month = document.getElementById("monthInput").value || "%";
+    const year = document.getElementById("yearInput").value || "%";
     const breed = document.getElementById("breedInput").value.toLocaleLowerCase('bg-BG');
     const gender = document.getElementById("genderSelect").value;
     const owner = document.getElementById("ownerInput").value.toLocaleLowerCase('bg-BG');
@@ -62,6 +67,7 @@ function filterTable() {
     ];
 
     const orderby = document.getElementById("orderBy").value;
+    const orderDirection = document.getElementById("orderDirection").value;
     const limit = document.getElementById("limitInput").value;
 
     nullables = "";
@@ -70,9 +76,10 @@ function filterTable() {
             nullables += `\nAND ${element.value} IS NOT NULL`;
         }
     });
-    const query = filters + nullables + `\nORDER BY ${orderby} LIMIT ?`;
+    const query = filters + nullables + `\nORDER BY UNICODE_LOWER(${orderby}) ${orderDirection} LIMIT ?`;
     const statement = db.prepare(query);
-    statement.bind([name, municipality, address, breed, gender, owner, limit]);
+    statement.bind([name, municipality, address, year, month, day, breed, gender, owner, limit]);
+    console.log(statement.getSQL(), name, municipality, address, year, month, day, breed, gender, owner, limit);
 
     const result = [];
     while (statement.step()) {

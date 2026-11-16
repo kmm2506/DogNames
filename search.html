@@ -82,8 +82,9 @@
                     <div class="filter-group">
                         <label for="dateInput">Дата на регистрация</label>
 
-                        <input type="date" id="dateInput" placeholder="Търси по дата..." oninput="filterTable()"
-                            value="">
+                        <input type="number" id="dayInput" placeholder="Ден..." oninput="filterTable()" value="">
+                        <input type="number" id="monthInput" placeholder="Месец..." oninput="filterTable()" value="">
+                        <input type="number" id="yearInput" placeholder="Година..." oninput="filterTable()" value="">
                     </div>
 
                     <!--Търсене по порода-->
@@ -121,9 +122,14 @@
                             <option value="municipality">Община</option>
                             <option value="address">Адрес</option>
                             <option value="registration_date">Дата</option>
-                            <option value="gender">Порода</option>
+                            <option value="breed">Порода</option>
                             <option value="gender">Пол</option>
                             <option value="owner">Собственик</option>
+                        </select>
+
+                        <select id="orderDirection" onchange="filterTable()">
+                            <option value="ASC">Възходящо</option>
+                            <option value="DESC">Низходящо</option>
                         </select>
                     </div>
 
