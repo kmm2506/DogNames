@@ -43,7 +43,7 @@
                     <h2>Регистрирани кучета</h2>
 
                     <!---Count of dogs-->
-                    <p class="card-number" id="registered-dogs-count">XXXX</p>
+                    <p class="card-number" id="registered-dogs-count"></p>
 
                     <p class="card-description">
                         Общ брой на регистрираните кучета в базата данни.
@@ -73,13 +73,28 @@
                 <h1></h1>
 
                 <p>
-                    DogData представя публична информация за
-                    регистрираните кучета в България и превръща
-                    данните в достъпна и разбираема информация.
+                    DogData събира публичните данни за
+                    регистрираните кучета в България и ги
+                    представя достъпно и разбираемо.
                 </p>
             </div>
         </section>
     </main>
+
+    <script src="libs/sql-wasm-inline.js"></script>
+    <script>
+        loadDatabase();
+
+        async function loadDatabase() {
+            const SQL = await initSqlJs();
+            const response = await fetch("data/data.db");
+            const buffer = await response.arrayBuffer();
+            db = new SQL.Database(new Uint8Array(buffer));
+
+            const dogCount = document.getElementById("registered-dogs-count");
+            dogCount.textContent = db.exec("SELECT COUNT(*) FROM dogs")[0].values[0][0];
+        }
+    </script>
 
     <footer class="site-footer">
         <div class="footer-container">
