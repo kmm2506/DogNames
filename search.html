@@ -45,7 +45,7 @@
                 <p>
                     Използвай филтрите, за да намериш информация за регистрирани кучета.
                 </p>
-                
+
             </div>
 
             <div class="search-layout">
@@ -57,13 +57,8 @@
                     <!--Търсене по име-->
                     <div class="filter-group">
                         <label for="nameInput">Име на домашния любимец</label>
-                        <input 
-                        type="text" 
-                        id="nameInput" 
-                        placeholder="Търси по име..." 
-                        oninput="filterTable()" 
-                        value=""
-                        >
+                        <input type="text" id="nameInput" placeholder="Търси по име..." oninput="filterTable()"
+                            value="">
                     </div>
 
                     <!--Избор на община-->
@@ -79,39 +74,24 @@
                     <div class="filter-group">
                         <label for="addressInput">Адрес</label>
 
-                        <input
-                            type="text"
-                            id="addressInput" 
-                            placeholder="Търси по адрес..." 
-                            oninput="filterTable()"
-                            value=""
-                        >
+                        <input type="text" id="addressInput" placeholder="Търси по адрес..." oninput="filterTable()"
+                            value="">
                     </div>
 
                     <!--Търсене по дата-->
                     <div class="filter-group">
                         <label for="dateInput">Дата на регистрация</label>
 
-                        <input 
-                            type="date" 
-                            id="dateInput" 
-                            placeholder="Търси по дата..." 
-                            oninput="filterTable()" 
-                            value=""
-                        >
+                        <input type="date" id="dateInput" placeholder="Търси по дата..." oninput="filterTable()"
+                            value="">
                     </div>
 
                     <!--Търсене по порода-->
                     <div class="filter-group">
                         <label for="breedInput">Порода</label>
 
-                        <input 
-                            type="text" 
-                            id="breedInput" 
-                            placeholder="Търси по порода..." 
-                            oninput="filterTable()" 
-                            value=""
-                        >
+                        <input type="text" id="breedInput" placeholder="Търси по порода..." oninput="filterTable()"
+                            value="">
                     </div>
 
                     <div class="filter-group">
@@ -128,114 +108,70 @@
                     <div class="filter-group">
                         <label for="ownerInput">Собственик</label>
 
-                        <input 
-                            type="text" 
-                            id="ownerInput" 
-                            placeholder="Търси по собственик..." 
-                            oninput="filterTable()" 
-                            value=""
-                        >
+                        <input type="text" id="ownerInput" placeholder="Търси по собственик..." oninput="filterTable()"
+                            value="">
                     </div>
 
                     <!--Sort-->
                     <div class="filter-group">
                         <label for="orderBy">Сортирай по</label>
 
-                            <select id="orderBy" onchange="filterTable()">
-                                <option value="name">Име</option>
-                                <option value="municipality">Община</option>
-                                <option value="address">Адрес</option>
-                                <option value="registration_date">Дата</option>
-                                <option value="gender">Порода</option>
-                                <option value="gender">Пол</option>
-                                <option value="owner">Собственик</option>
-                            </select>
+                        <select id="orderBy" onchange="filterTable()">
+                            <option value="name">Име</option>
+                            <option value="municipality">Община</option>
+                            <option value="address">Адрес</option>
+                            <option value="registration_date">Дата</option>
+                            <option value="gender">Порода</option>
+                            <option value="gender">Пол</option>
+                            <option value="owner">Собственик</option>
+                        </select>
                     </div>
 
                     <!--Лимит на резултатите-->
                     <div class="filter-group">
                         <label for="limitInput">Брой резултати</label>
 
-                         <input
-                            type="text"
-                            id="limitInput" 
-                            placeholder="Лимит..." 
-                            oninput="filterTable()" 
-                            value="100"
-                        >
+                        <input type="text" id="limitInput" placeholder="Лимит..." oninput="filterTable()" value="100">
                     </div>
 
                     <!--Настройки за липсващи данни-->
                     <div class="filter-group">
                         <h3>Липсващи данни</h3>
 
-                         <p>
+                        <p>
                             Позволи показването на записи,
                             при които липсва:
                         </p>
 
                         <label>
-                             <input 
-                                type="checkbox" 
-                                id="nullableName" 
-                                value="name" 
-                                onchange="filterTable()"
-                            >
+                            <input type="checkbox" id="nullableName" value="name" onchange="filterTable()">
                             Име
                         </label>
 
                         <label>
-                            <input 
-                                type="checkbox" 
-                                id="nullableAddress" 
-                                value="address" 
-                                onchange="filterTable()" 
-                                checked
-                            >
+                            <input type="checkbox" id="nullableAddress" value="address" onchange="filterTable()"
+                                checked>
                             Адрес
                         </label>
                         <label>
-                        <input 
-                            type="checkbox" 
-                            id="nullableDate" 
-                            value="registration_date" 
-                            onchange="filterTable()" 
-                            checked
-                        >
-                        Дата
+                            <input type="checkbox" id="nullableDate" value="registration_date" onchange="filterTable()"
+                                checked>
+                            Дата
                         </label>
 
                         <label>
-                            <input 
-                                type="checkbox" 
-                                id="nullableBreed" 
-                                value="breed" 
-                                onchange="filterTable()" 
-                                checked
-                            >
+                            <input type="checkbox" id="nullableBreed" value="breed" onchange="filterTable()" checked>
                             Порода
                         </label>
 
                         <label>
-                            <input 
-                                type="checkbox" 
-                                id="nullableGender" 
-                                value="gender" 
-                                onchange="filterTable()" 
-                                checked
-                            >
+                            <input type="checkbox" id="nullableGender" value="gender" onchange="filterTable()" checked>
                             Пол
                         </label>
 
                         <label>
-                             <input 
-                                type="checkbox" 
-                                id="nullableOwner" 
-                                value="owner" 
-                                onchange="filterTable()" 
-                                checked
-                             >
-                             Собственик
+                            <input type="checkbox" id="nullableOwner" value="owner" onchange="filterTable()" checked>
+                            Собственик
                         </label>
                     </div>
                 </aside>
@@ -273,9 +209,9 @@
                 </section>
             </div>
         </div>
-        
+
     </main>
-        
+
     <!--JavaScript библиотеки-->
     <script src="libs/sql-wasm-inline.js"></script>
     <script src="scripts/search.js"></script>
@@ -285,15 +221,15 @@
         <div class="footer-container">
             <!--first colon-->
             <div class="footer-about">
-                 <a href="index.html" class="logo">
-                 <img src="images/logo.png" alt="DogData logo">
-                <h2>DogData</h2>
-                
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="DogData logo">
+                    <h2>DogData</h2>
 
-                <p>
-                    Публични данни за регистрираните кучета
-                    в България
-                </p>
+
+                    <p>
+                        Публични данни за регистрираните кучета
+                        в България
+                    </p>
                 </a>
             </div>
             <!--second colon-->
@@ -320,12 +256,8 @@
 
         </div>
 
-        <div class="footer-bottom">
-            <p>2026 DogData. Всички права запазени.</p>
-        </div>
-
     </footer>
-    
+
 
 </body>
 
