@@ -1,6 +1,5 @@
 let db;
-const filters = `SELECT * FROM dogs
-    WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
+const filters = `WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
     AND municipality LIKE ?
     AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
     AND (strftime('%Y', registration_date) LIKE ? OR registration_date IS NULL)
@@ -23,6 +22,7 @@ async function loadDatabase() {
     );
 
     show(db.exec("SELECT * FROM dogs WHERE name NOT NULL ORDER BY name LIMIT 100")[0].values);
+
     const municipalitySelect = document.getElementById("municipalitySelect");
     municipalitySelect.innerHTML = "<option value='%'>Всички общини</option>" +
         db.exec("SELECT DISTINCT municipality FROM dogs ORDER BY municipality")[0].values
@@ -50,9 +50,12 @@ function filterTable() {
     const name = document.getElementById("nameInput").value.toLocaleLowerCase('bg-BG');
     const municipality = document.getElementById("municipalitySelect").value;
     const address = document.getElementById("addressInput").value.toLocaleLowerCase('bg-BG');
-    const day = document.getElementById("dayInput").value || "%";
-    const month = document.getElementById("monthInput").value || "%";
-    const year = document.getElementById("yearInput").value || "%";
+    let day = document.getElementById("dayInput").value || "%";
+    if (day.length === 1) day = "0" + day;
+    let month = document.getElementById("monthInput").value || "%";
+    if (month.length === 1) month = "0" + month;
+    let year = document.getElementById("yearInput").value || "%";
+    if (year.length === 2) year = "20" + year;
     const breed = document.getElementById("breedInput").value.toLocaleLowerCase('bg-BG');
     const gender = document.getElementById("genderSelect").value;
     const owner = document.getElementById("ownerInput").value.toLocaleLowerCase('bg-BG');
@@ -76,7 +79,11 @@ function filterTable() {
             nullables += `\nAND ${element.value} IS NOT NULL`;
         }
     });
-    const query = filters + nullables + `\nORDER BY UNICODE_LOWER(${orderby}) ${orderDirection} LIMIT ?`;
+    const query = `SELECT * FROM dogs ` +
+        filters +
+        nullables +
+        `\nORDER BY UNICODE_LOWER(${orderby}) ${orderDirection}
+        LIMIT ?`;
     const statement = db.prepare(query);
     statement.bind([name, municipality, address, year, month, day, breed, gender, owner, limit]);
     console.log(statement.getSQL(), name, municipality, address, year, month, day, breed, gender, owner, limit);
@@ -86,4 +93,6 @@ function filterTable() {
         result.push(statement.get());
     }
     show(result);
+
+    document.getElementById("resultsCount").textContent = result.length;
 }
