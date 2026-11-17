@@ -82,9 +82,11 @@
                     <div class="filter-group">
                         <label for="dateInput">Дата на регистрация</label>
 
+                        <div class="date-inputs">
                         <input type="number" id="dayInput" placeholder="Ден..." oninput="filterTable()" value="">
                         <input type="number" id="monthInput" placeholder="Месец..." oninput="filterTable()" value="">
                         <input type="number" id="yearInput" placeholder="Година..." oninput="filterTable()" value="">
+                        </div>
                     </div>
 
                     <!--Търсене по порода-->
@@ -141,44 +143,48 @@
                     </div>
 
                     <!--Настройки за липсващи данни-->
-                    <div class="filter-group">
+                    <div class="nullable-filters">
+
                         <h3>Липсващи данни</h3>
 
-                        <p>
-                            Позволи показването на записи,
-                            при които липсва:
-                        </p>
+                        <p>Позволи показването на записи, при които липсва:</p>
 
-                        <label>
-                            <input type="checkbox" id="nullableName" value="name" onchange="filterTable()">
-                            Име
-                        </label>
+                        <div class="nullable-option">
+                            <input type="checkbox" id="nullableName"
+                                value="name" onchange="filterTable()">
+                            <label for="nullableName">Име</label>
+                        </div>
 
-                        <label>
-                            <input type="checkbox" id="nullableAddress" value="address" onchange="filterTable()"
-                                checked>
-                            Адрес
-                        </label>
-                        <label>
-                            <input type="checkbox" id="nullableDate" value="registration_date" onchange="filterTable()"
-                                checked>
-                            Дата
-                        </label>
+                        <div class="nullable-option">
+                            <input type="checkbox" id="nullableAddress"
+                                value="address" onchange="filterTable()" checked>
+                            <label for="nullableAddress">Адрес</label>
+                        </div>
 
-                        <label>
-                            <input type="checkbox" id="nullableBreed" value="breed" onchange="filterTable()" checked>
-                            Порода
-                        </label>
+                        <div class="nullable-option">
+                            <input type="checkbox" id="nullableDate"
+                                value="registration_date" onchange="filterTable()" checked>
+                            <label for="nullableDate">Дата</label>
+                        </div>
 
-                        <label>
-                            <input type="checkbox" id="nullableGender" value="gender" onchange="filterTable()" checked>
-                            Пол
-                        </label>
+                        <div class="nullable-option">
+                            <input type="checkbox" id="nullableBreed"
+                                value="breed" onchange="filterTable()" checked>
+                            <label for="nullableBreed">Порода</label>
+                        </div>
 
-                        <label>
-                            <input type="checkbox" id="nullableOwner" value="owner" onchange="filterTable()" checked>
-                            Собственик
-                        </label>
+                        <div class="nullable-option">
+                            <input type="checkbox" id="nullableGender"
+                                value="gender" onchange="filterTable()" checked>
+                            <label for="nullableGender">Пол</label>
+                        </div>
+
+                        <div class="nullable-option">
+                            <input type="checkbox" id="nullableOwner"
+                                value="owner" onchange="filterTable()" checked>
+                            <label for="nullableOwner">Собственик</label>
+                        </div>
+
                     </div>
                 </aside>
 

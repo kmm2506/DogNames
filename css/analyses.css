@@ -1,0 +1,123 @@
+.national-statistics {
+    display: grid;
+    grid-template-columns: minmax(0, 750px) minmax(0, 1fr);
+    gap: 35px;
+    align-items: center;
+    width: 100%;
+    margin: 35px 0;
+    padding: 0 25px;
+}
+
+.national-chart-card {
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+.national-chart-card h2 {
+    color: #17324D;
+    font-size: 20px;
+    margin: 0 0 20px;
+}
+
+/*Text*/
+.national-description {
+    color: #354D5D;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.national-description p {
+    margin: 0 0 15px;
+}
+
+/* Голяма външна карта */
+.regional-statistics {
+    width: 100%;
+    margin: 35px 0;
+    padding: 0 25px;
+}
+
+.regional-content {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+/* Лява част с диаграмата */
+.regional-chart h2 {
+    color: #17324D;
+    font-size: 20px;
+    margin: 0 0 25px;
+}
+
+/* Вътрешна карта с филтри */
+.regional-filters-card {
+    background-color: #EAF2F5;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.regional-filters-card h3 {
+    color: #17324D;
+    font-size: 17px;
+    margin: 0 0 20px;
+}
+
+/* Полета за избор */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.filter-group label {
+    color: #354D5D;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #D2DEE5;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+    color: #354D5D;
+}
+
+/* Двете колони с отметки */
+.filter-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px 12px;
+    margin-top: 10px;
+}
+
+/* Отделна опция */
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #354D5D;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Самата отметка */
+.filter-option input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #256D85;
+    cursor: pointer;
+    flex-shrink: 0;
+}

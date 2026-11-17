@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        DogData | Анализи
+    </title>
+    <!--Obshti stilove-->
+    <link rel="stylesheet" href="css/style.css">
+    <!--Стил на страницаа анализ-->
+    <link rel="stylesheet" href="css/analyses.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="DogData logo">
+                DogData
+            </a>
+
+            <p class="header-description">
+                Публични данни за регистрираните кучета в България
+            </p>
+
+            <nav class="main-nav">
+                <a href="index.html">Начало</a>
+                <a href="analyses.html" class="active">Анализи</a>
+                <a href="search.html">Търсачка</a>
+                <a href="registration.html">Регистрация</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="analyses-page">
+
+        <div class="analyses-container">
+
+            <section class="national-statistics">
+                <div class="national-chart-card">
+                    <h2>Разпределение на записите по области в България</h2>
+                    <canvas id="nationalChart"></canvas>
+                </div>
+
+                <div class="national-description">
+                     <p>
+                        Диаграмата представя разпределението на регистрираните
+                        кучета по административни области в България според
+                        наличните данни в платформата.
+                    </p>
+
+                    <p>
+                        Всяка част от кръга съответства на отделна област,
+                        като размерът ѝ показва броя на записите,
+                        свързани с нея.
+                    </p>
+
+                    <p>
+                        Чрез това представяне могат лесно да се откроят
+                        областите с най-много и най-малко записи и да се
+                        направи общ преглед на тяхното разпределение в страната.
+                    </p>
+                </div>
+            </section>
+
+            <section class="regional-statistics">
+
+    <div class="regional-content">
+
+        <!-- Вътрешна карта с филтри -->
+        <div class="regional-filters-card">
+            <h3>Филтри</h3>
+
+            <!--Izbor na oblast-->
+            <div class="filter-group">
+                <label for="regionSelect">Област</label>
+                <select id="regionSelect">
+                    <option value="">Избери област</option>
+                </select>
+            </div>
+
+            <!--types of diagrams-->
+            <div class="filter-group">
+                <label>Показател</label>
+
+                 <div class="filter-options">
+
+            <label class="filter-option">
+                <input type="radio" name="chartFilter" value="name">
+                <span>Имена</span>
+            </label>
+
+            <label class="filter-option">
+                <input type="radio" name="chartFilter" value="year">
+                <span>Години на регистрация</span>
+            </label>
+
+            <label class="filter-option">
+                <input type="radio" name="chartFilter" value="gender">
+                <span>Пол</span>
+            </label>
+
+            <label class="filter-option">
+                <input type="radio" name="chartFilter" value="breed">
+                <span>Порода</span>
+            </label>
+
+        </div>
+            </div>
+        </div>
+
+        <!-- Регионална диаграма -->
+        <div class="regional-chart">
+            <h2>Регионална статистика</h2>
+            <canvas id="regionalChart"></canvas>
+        </div>
+
+    </div>
+
+</section>
+
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!--first colon-->
+            <div class="footer-about">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="DogData logo">
+                    <h2>DogData</h2>
+
+
+                    <p>
+                        Публични данни за регистрираните кучета
+                        в България
+                    </p>
+                </a>
+            </div>
+            <!--second colon-->
+            <div class="footer-navigation">
+                <h3>Навигация</h3>
+
+                <a href="index.html">Начало</a>
+                <a href="analyses.html">Анализ</a>
+                <a href="search.html">Търсачка</a>
+                <a href="registration.html">Регистрация</a>
+            </div>
+
+            <!--third colon-->
+            <div class="footer-project">
+                <h3>За проекта</h3>
+                <!--add info-->
+                <p>
+                    Университетски проект, посветен на
+                    повторното използване на отворените данни.
+                </p>
+                <!--add sources-->
+                <p>Източници на данни:</p>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
