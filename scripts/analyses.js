@@ -30,8 +30,7 @@ loadDatabase().then(() => {
             datasets: [{
                 label: 'Брой записи',
                 data: data,
-                backgroundColor: backgroundColors,
-                borderWidth: 1
+                backgroundColor: backgroundColors
             }]
         },
         options: {
@@ -60,7 +59,6 @@ loadDatabase().then(() => {
     totalRecords.breed = pairs.map(row => ({ municipality: row[0], count: row[1] }));
     totalRecords.breed.push({ municipality: "%", count: pairs.reduce((acc, row) => acc + row[1], 0) });
 
-    // regional chart
     updateRegionalChart();
 });
 
@@ -80,13 +78,18 @@ function updateRegionalChart() {
     // query database for selected filter and municipality
     const selectedFilter = Array.from(chartFilterRadios).find(radio => radio.checked)?.value;
     const column = selectedFilter === "year" ? "STRFTIME('%Y', registration_date)" : selectedFilter;
+    const otherLabel = selectedFilter === "year" ? "Предишни години" : "Други";
+    const orderby = selectedFilter === "year" ? "STRFTIME('%Y', registration_date)" :
+        selectedFilter === "gender" ? "gender" : "count";
+    const limit = selectedFilter === "gender" ? 2 : limitInput.value;
+    limitInput.disabled = selectedFilter === "gender";
 
     const statement = db.prepare(`SELECT UNICODE_PROPER(${column}), COUNT(*) as count FROM dogs
         WHERE ${column} IS NOT NULL
         AND municipality LIKE ?
         GROUP BY UNICODE_PROPER(${column})
-        ORDER BY count DESC LIMIT ?`);
-    statement.bind([municipalitySelect.value, limitInput.value]);
+        ORDER BY ${orderby} DESC LIMIT ?`);
+    statement.bind([municipalitySelect.value, limit]);
     const result = [];
     while (statement.step()) {
         result.push(statement.get());
@@ -96,15 +99,53 @@ function updateRegionalChart() {
     data = result.map(row => row[1]);
     const topCount = data.reduce((a, b) => a + b, 0);
     const othersCount = totalRecords[selectedFilter].find(record => record.municipality === municipalitySelect.value)?.count - topCount || 0;
-    
+
     labels = result.map(row => row[0]);
-    
+
     backgroundColors = generateColors(labels.length);
+    borderColors = generateColors(labels.length, 90, 50);
 
     if (othersCount !== 0) {
         data.push(othersCount);
-        labels.push("Други");
+        labels.push(otherLabel);
         backgroundColors.push("#d3d3d3");
+        borderColors.push("#bbbbbb");
+    }
+
+    let datasets;
+    let type;
+    switch (selectedFilter) {
+        case "name":
+            datasets = [{
+                data: data,
+                backgroundColor: backgroundColors
+            }];
+            type = "doughnut";
+            break;
+        case "year":
+            datasets = [{
+                data: data,
+                borderColor: "#888888",
+                borderWidth: 2
+            }];
+            type = "line";
+            break;
+        case "gender":
+            datasets = [{
+                data: data,
+                backgroundColor: ["#5fcaff", "#ff8dc6"]
+            }];
+            type = "pie";
+            break;
+        case "breed":
+            datasets = [{
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 2
+            }];
+            type = "bar";
+            break;
     }
 
     // make chart
@@ -112,20 +153,16 @@ function updateRegionalChart() {
         regionalChart.destroy();
     }
     regionalChart = new Chart(regionalCtx, {
-        type: 'doughnut',
+        type: type,
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Брой кучета',
-                data: data,
-                backgroundColor: backgroundColors,
-                borderWidth: 1
-            }]
+            datasets: datasets
         },
         options: {
             plugins: {
                 legend: {
-                    position: 'right'
+                    display: (selectedFilter === "name" || selectedFilter === "gender"),
+                    position: "right"
                 }
             }
         }

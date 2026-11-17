@@ -58,6 +58,11 @@
     margin: 0 0 25px;
 }
 
+.regional-content canvas {
+    max-height: 500px;
+    width: 100%;
+}
+
 /* Вътрешна карта с филтри */
 .regional-filters-card {
     background-color: #EAF2F5;
