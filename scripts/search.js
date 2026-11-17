@@ -2,14 +2,23 @@ let db;
 const filters = `WHERE (UNICODE_LOWER(name) LIKE ? || '%' OR name IS NULL)
     AND municipality LIKE ?
     AND (UNICODE_LOWER(address) LIKE '%' || ? || '%' OR address IS NULL)
-    AND (strftime('%Y', registration_date) LIKE ? OR registration_date IS NULL)
-    AND (strftime('%m', registration_date) LIKE ? OR registration_date IS NULL)
-    AND (strftime('%d', registration_date) LIKE ? OR registration_date IS NULL)
+    AND (STRFTIME('%Y', registration_date) LIKE ? OR registration_date IS NULL)
+    AND (STRFTIME('%m', registration_date) LIKE ? OR registration_date IS NULL)
+    AND (STRFTIME('%d', registration_date) LIKE ? OR registration_date IS NULL)
     AND (UNICODE_LOWER(breed) LIKE '%' || ? || '%' OR breed IS NULL)
     AND (gender LIKE ? OR gender IS NULL)
     AND (UNICODE_LOWER(owner) LIKE ? || '%' OR owner IS NULL)`;
 let nullables;
-loadDatabase();
+
+loadDatabase().then(() => {
+    show(db.exec("SELECT * FROM dogs WHERE name IS NOT NULL ORDER BY name LIMIT 100")[0].values);
+
+    const municipalitySelect = document.getElementById("municipalitySelect");
+    municipalitySelect.innerHTML = "<option value='%'>Всички общини</option>" +
+        db.exec("SELECT DISTINCT municipality FROM dogs ORDER BY municipality")[0].values
+            .map(row => `<option value="${row[0]}">${row[0]}</option>`)
+            .join("");
+});
 
 async function loadDatabase() {
     const SQL = await initSqlJs();
@@ -20,14 +29,6 @@ async function loadDatabase() {
     db.create_function('UNICODE_LOWER', (str) =>
         str?.toLocaleLowerCase('bg-BG') ?? ''
     );
-
-    show(db.exec("SELECT * FROM dogs WHERE name NOT NULL ORDER BY name LIMIT 100")[0].values);
-
-    const municipalitySelect = document.getElementById("municipalitySelect");
-    municipalitySelect.innerHTML = "<option value='%'>Всички общини</option>" +
-        db.exec("SELECT DISTINCT municipality FROM dogs ORDER BY municipality")[0].values
-            .map(row => `<option value="${row[0]}">${row[0]}</option>`)
-            .join("");
 }
 
 function show(result) {
@@ -51,9 +52,9 @@ function filterTable() {
     const municipality = document.getElementById("municipalitySelect").value;
     const address = document.getElementById("addressInput").value.toLocaleLowerCase('bg-BG');
     let day = document.getElementById("dayInput").value || "%";
-    if (day.length === 1) day = "0" + day;
+    if (day.length === 1 && day !== "%") day = "0" + day;
     let month = document.getElementById("monthInput").value || "%";
-    if (month.length === 1) month = "0" + month;
+    if (month.length === 1 && month !== "%") month = "0" + month;
     let year = document.getElementById("yearInput").value || "%";
     if (year.length === 2) year = "20" + year;
     const breed = document.getElementById("breedInput").value.toLocaleLowerCase('bg-BG');
