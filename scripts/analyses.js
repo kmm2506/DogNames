@@ -203,6 +203,7 @@ function createGreekNamesChart() {
         "Атина", "Артемида", "Хермес",
         "Ерос", "Харпия", "Троя",
         "Пенелопе", "Ахил", "Нестор",
+        "Кратос", "Деймос", "Пандора",
         "Парис", "Орфей"
     )`;
     const result = db.exec(`
@@ -217,7 +218,8 @@ function createGreekNamesChart() {
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
 
-    const backgroundColors = generateColors(labels.length);
+    //const backgroundColors = generateColors(labels.length);
+    
 
     new Chart(greekCtx,
         {
@@ -227,7 +229,8 @@ function createGreekNamesChart() {
                 datasets: [{
                     label: 'Брой кучета',
                     data: data,
-                    backgroundColor: backgroundColors,
+                    backgroundColor: ["#2f4c5c", "#f8b0f8"],
+                    
                 }]
             },
             options: {
@@ -331,50 +334,51 @@ function createDessertNamesChart() {
 }
 
 function createAnimalNamesChart() {
-    // const result = db.exec(`
-    //     SELECT UNICODE_PROPER(name), COUNT(*) as count
-    //     FROM dogs
-    //     WHERE name IS NOT NULL
-    //     AND (
-    //     name LIKE '%Беър%'
-    //     OR name = 'Беър'
-    //     OR name LIKE 'Вълк%'
-    //     OR name LIKE 'Вълчо%'
-    //     OR name LIKE 'Въшка%'
-    //     OR name LIKE 'Мишка%'
-    //     OR name LIKE 'Меч%'
-    //     OR name LIKE 'Коала%'
-    //     OR name LIKE 'Куч%'
-    //     OR name LIKE 'Панда%'
-    //     OR name LIKE 'Панди%'
-    //     OR name LIKE 'Лиси%'
-    //     OR name LIKE 'Тигър%'
-    //     OR name LIKE 'Тигра%'
-    //     OR name LIKE 'Лъв%'
-    //     OR name LIKE 'Пантера%'
-    //     OR name LIKE 'Пума%'
-    //     OR name LIKE 'Кобра%'
-    //     OR name LIKE 'Койот%'
-    //     OR name LIKE 'Зайка%'
-    //     OR name LIKE 'Дракон%'
-    //     OR name LIKE 'Драгон%'
-    //     OR name LIKE 'Мравка%'
-    //     OR name LIKE 'Калинка%'
-    //     )
-
-    //     GROUP BY UNICODE_PROPER(name)
-    //     ORDER BY count DESC
-    // `)[0].values;
-
     const result = db.exec(`
-        SELECT FIRST_WORD_PROPER(name) as prefix,
-        COUNT(*) as count FROM dogs
-        WHERE name IS NOT NULL AND prefix IN
-        ('Куче', 'Мечо')
-        GROUP BY prefix
-        ORDER BY count DESC
+        SELECT UNICODE_PROPER(name), COUNT(*) as count
+        FROM dogs
+        WHERE name IS NOT NULL
+        AND (
+        name LIKE '%Беър%'
+        OR name = 'Беър'
+        OR name LIKE 'Вълк%'
+        OR name LIKE 'Вълчо%'
+        OR name LIKE 'Въшка%'
+        OR name LIKE 'Мишка%'
+        OR name LIKE 'Меч%'
+        OR name LIKE 'Коала%'
+        OR name LIKE 'Куче'
+        OR name LIKE 'Кучо'
+        OR name LIKE 'Панда%'
+        OR name LIKE 'Панди%'
+        OR name LIKE 'Лиси%'
+        OR name LIKE 'Тигър%'
+        OR name LIKE 'Тигра%'
+        OR name LIKE 'Лъв%'
+        OR name LIKE 'Пантера%'
+        OR name LIKE 'Пума%'
+        OR name LIKE 'Кобра%'
+        OR name LIKE 'Койот%'
+        OR name LIKE 'Зайка%'
+        OR name LIKE 'Дракон%'
+        OR name LIKE 'Драгон%'
+        OR name LIKE 'Мравка%'
+        OR name LIKE 'Калинка%'
+        )
 
+        GROUP BY UNICODE_PROPER(name)
+        ORDER BY count DESC
     `)[0].values;
+
+    // const result = db.exec(`
+    //     SELECT FIRST_WORD_PROPER(name) as prefix,
+    //     COUNT(*) as count FROM dogs
+    //     WHERE name IS NOT NULL AND prefix IN
+    //     ('Куче', 'Мечо')
+    //     GROUP BY prefix
+    //     ORDER BY count DESC
+
+    // `)[0].values;
 
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
