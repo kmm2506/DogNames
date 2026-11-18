@@ -69,6 +69,7 @@ loadDatabase().then(() => {
     createNamesWithTitleChart();
     createDessertNamesChart();
     createAnimalNamesChart();
+    createPlantNamesChart();
 });
 
 async function loadDatabase() {
@@ -253,7 +254,7 @@ function createNamesWithTitleChart() {
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
 
-    const backgroundColors = ["#57025f", "rgb(204, 176, 15)"] ;//generateColors(labels.length);
+    const backgroundColors = ["#57025f", "rgb(204, 176, 15)"];//generateColors(labels.length);
 
     new Chart(titlesCtx,
         {
@@ -360,7 +361,7 @@ function createAnimalNamesChart() {
     //     OR name LIKE 'Мравка%'
     //     OR name LIKE 'Калинка%'
     //     )
-        
+
     //     GROUP BY UNICODE_PROPER(name)
     //     ORDER BY count DESC
     // `)[0].values;
@@ -402,7 +403,7 @@ function createAnimalNamesChart() {
     );
 }
 
-function createDessertNamesChart() {
+function createPlantNamesChart() {
     const result = db.exec(`
         SELECT UNICODE_PROPER(name), COUNT(*) as count
         FROM dogs
