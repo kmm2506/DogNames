@@ -1,0 +1,339 @@
+/*Gorna chast*/
+.registration-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    padding: 35px 25px;
+}
+
+.registration-header h1 {
+    color: #17324D;
+    font-size: 28px;
+    margin: 0;
+}
+
+.region-selector {
+    position: relative;
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.region-selector input {
+    width: 100%;
+    padding: 12px 15px;
+    transform: translateX(-400px);
+    border: 1px solid #D2DEE5;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+    color: #354D5D;
+    font-size: 15px;
+}
+
+.region-selector input:focus {
+    outline: none;
+    border-color: #256D85;
+}
+
+.region-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #D2DEE5;
+    border-radius: 7px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.12);
+    z-index: 10;
+}
+
+/*sredna chast*/
+.registration-info {
+    margin: 15px 25px 35px;
+    padding: 25px 30px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+.registration-info h2 {
+    color: #17324D;
+    font-size: 21px;
+    margin: 0 0 18px;
+}
+
+.registration-info p {
+    color: #354D5D;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 12px;
+}
+
+.registration-info p:last-child {
+    margin-bottom: 0;
+}
+
+/* Долна част - постоянен текст и информация за общината */
+
+.registration-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 30px;
+    align-items: start;
+
+    margin: 35px 25px;
+    padding: 30px;
+
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+/* ЛЯВА ЧАСТ - постоянен текст */
+
+.registration-guide {
+    min-width: 0;
+}
+
+.registration-guide > h2 {
+    color: #17324D;
+    font-size: 25px;
+    margin: 0 0 25px;
+}
+
+.guide-section {
+    margin-bottom: 28px;
+}
+
+.guide-section h3,
+.guide-sources h3 {
+    color: #256D85;
+    font-size: 18px;
+    margin: 0 0 12px;
+}
+
+.guide-section p {
+    color: #354D5D;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 13px;
+}
+
+.guide-section strong {
+    color: #17324D;
+}
+
+/* Източници */
+
+.guide-sources {
+    padding-top: 20px;
+    border-top: 1px solid #EAF2F5;
+}
+
+.guide-sources ul {
+    padding-left: 20px;
+}
+
+.guide-sources li {
+    color: #354D5D;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.guide-sources a {
+    color: #256D85;
+    text-decoration: none;
+}
+
+.guide-sources a:hover {
+    text-decoration: underline;
+}
+
+
+/* dolna chast */
+
+
+/* =================================
+   ГОЛЯМА ВЪНШНА КАРТА
+================================= */
+
+.registration-layout {
+    display: grid;
+
+    /* Лявата колона е по-широка от дясната */
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+    gap: 30px;
+    align-items: start;
+
+    width: auto;
+    margin: 35px 25px;
+    padding: 30px;
+
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
+
+/* =================================
+   ЛЯВА КОЛОНА - ПОСТОЯНЕН ТЕКСТ
+================================= */
+
+.registration-guide {
+    min-width: 0;
+}
+
+.registration-guide > h2 {
+    color: #17324D;
+    font-size: 25px;
+    margin: 0 0 25px;
+}
+
+.guide-section {
+    margin-bottom: 28px;
+}
+
+.guide-section h3,
+.guide-sources h3 {
+    color: #256D85;
+    font-size: 18px;
+    margin: 0 0 12px;
+}
+
+.guide-section p {
+    color: #354D5D;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 13px;
+}
+
+.guide-section strong {
+    color: #17324D;
+}
+
+
+/* Източници */
+
+.guide-sources {
+    padding-top: 20px;
+    border-top: 1px solid #EAF2F5;
+}
+
+.guide-sources ul {
+    padding-left: 20px;
+}
+
+.guide-sources li {
+    color: #354D5D;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.guide-sources a {
+    color: #256D85;
+    text-decoration: none;
+}
+
+.guide-sources a:hover {
+    text-decoration: underline;
+}
+
+
+/* =================================
+   ДЯСНА КОЛОНА
+================================= */
+
+.municipality-panel {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+/* Вътрешна карта с информация */
+
+.municipality-info-card {
+    padding: 25px;
+    background-color: #EAF2F5;
+    border-radius: 10px;
+}
+
+.municipality-info-card h2 {
+    color: #17324D;
+    font-size: 23px;
+    margin: 0 0 25px;
+}
+
+.municipality-info-item {
+    margin-bottom: 22px;
+}
+
+.municipality-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.municipality-info-item h3 {
+    color: #256D85;
+    font-size: 17px;
+    margin: 0 0 8px;
+}
+
+.municipality-info-item p {
+    color: #354D5D;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+
+/* =================================
+   СНИМКА ПОД ВЪТРЕШНАТА КАРТА
+================================= */
+
+.guide-image img {
+    display: block;
+    width: 100%;
+    height: 300px;
+
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/* =================================
+   АДАПТИВНОСТ
+================================= */
+
+@media (max-width: 1000px) {
+
+    .registration-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .registration-layout {
+        margin: 20px 12px;
+        padding: 18px;
+    }
+
+    .registration-guide > h2 {
+        font-size: 21px;
+    }
+
+    .municipality-info-card {
+        padding: 18px;
+    }
+
+    .guide-image img {
+        height: 230px;
+    }
+
+}
