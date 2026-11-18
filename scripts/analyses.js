@@ -7,6 +7,8 @@ const limitInput = document.getElementById("limitInput");
 const greekCtx = document.getElementById('greekChart').getContext('2d');
 const titlesCtx = document.getElementById('royalTitleChart').getContext('2d');
 const dessertCtx = document.getElementById('dessertChart').getContext('2d');
+const animalCtx = document.getElementById('animalChart').getContext('2d');
+const plantCtx = document.getElementById('plantChart').getContext('2d');
 let totalRecords = {
     name: [],
     year: [],
@@ -66,6 +68,7 @@ loadDatabase().then(() => {
     createGreekNamesChart();
     createNamesWithTitleChart();
     createDessertNamesChart();
+    createAnimalNamesChart();
 });
 
 async function loadDatabase() {
@@ -199,7 +202,7 @@ function createGreekNamesChart() {
         "Атина", "Артемида", "Хермес",
         "Ерос", "Харпия", "Троя",
         "Пенелопе", "Ахил", "Нестор",
-        "Парис"
+        "Парис", "Орфей"
     )`;
     const result = db.exec(`
         SELECT UNICODE_PROPER(name), COUNT(*) as count
@@ -217,7 +220,7 @@ function createGreekNamesChart() {
 
     new Chart(greekCtx,
         {
-            type: 'doughnut',
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
@@ -250,11 +253,136 @@ function createNamesWithTitleChart() {
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
 
-    const backgroundColors = generateColors(labels.length);
+    const backgroundColors = ["#57025f", "rgb(204, 176, 15)"] ;//generateColors(labels.length);
 
     new Chart(titlesCtx,
         {
-            type: 'doughnut',
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Брой кучета',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        }
+    );
+}
+
+function createDessertNamesChart() {
+    console.log("neshto");
+    const result = db.exec(`
+        SELECT UNICODE_PROPER(name), COUNT(*) as count
+        FROM dogs
+        WHERE name IS NOT NULL
+        AND (
+        name LIKE 'Карамел%'
+        OR name = 'Карамел'
+        OR name LIKE 'Пудинг%'
+        OR name LIKE 'Тирамису%'
+        OR name LIKE 'Бискит%'
+        OR name LIKE 'Шоко%'
+        OR name LIKE 'Чоко%'
+        OR name LIKE 'Ванила%'
+        OR name LIKE 'Ванилия%'
+        OR name LIKE 'Брауни%'
+        OR name LIKE 'Айс Крийм%'
+        OR name LIKE 'Фереро%'
+        )
+        GROUP BY UNICODE_PROPER(name)
+        ORDER BY count DESC
+    `)[0].values;
+
+    console.log(result);
+    const labels = result.map(row => row[0]);
+    const data = result.map(row => row[1]);
+
+    const backgroundColors = ["#fd82ed", "#7bcef8", "#fdf03c"]//generateColors(labels.length);
+
+    new Chart(dessertCtx,
+        {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Брой кучета',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        }
+    );
+}
+
+function createAnimalNamesChart() {
+    // const result = db.exec(`
+    //     SELECT UNICODE_PROPER(name), COUNT(*) as count
+    //     FROM dogs
+    //     WHERE name IS NOT NULL
+    //     AND (
+    //     name LIKE '%Беър%'
+    //     OR name = 'Беър'
+    //     OR name LIKE 'Вълк%'
+    //     OR name LIKE 'Вълчо%'
+    //     OR name LIKE 'Въшка%'
+    //     OR name LIKE 'Мишка%'
+    //     OR name LIKE 'Меч%'
+    //     OR name LIKE 'Коала%'
+    //     OR name LIKE 'Куч%'
+    //     OR name LIKE 'Панда%'
+    //     OR name LIKE 'Панди%'
+    //     OR name LIKE 'Лиси%'
+    //     OR name LIKE 'Тигър%'
+    //     OR name LIKE 'Тигра%'
+    //     OR name LIKE 'Лъв%'
+    //     OR name LIKE 'Пантера%'
+    //     OR name LIKE 'Пума%'
+    //     OR name LIKE 'Кобра%'
+    //     OR name LIKE 'Койот%'
+    //     OR name LIKE 'Зайка%'
+    //     OR name LIKE 'Дракон%'
+    //     OR name LIKE 'Драгон%'
+    //     OR name LIKE 'Мравка%'
+    //     OR name LIKE 'Калинка%'
+    //     )
+        
+    //     GROUP BY UNICODE_PROPER(name)
+    //     ORDER BY count DESC
+    // `)[0].values;
+
+    const result = db.exec(`
+        SELECT FIRST_WORD_PROPER(name) as prefix,
+        COUNT(*) as count FROM dogs
+        WHERE name IS NOT NULL AND prefix IN
+        ('Куче', 'Мечо')
+        GROUP BY prefix
+        ORDER BY count DESC
+
+    `)[0].values;
+
+    const labels = result.map(row => row[0]);
+    const data = result.map(row => row[1]);
+
+    const backgroundColors = ["#533030", "#0fc536"]//generateColors(labels.length);
+
+    new Chart(animalCtx,
+        {
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
@@ -280,17 +408,25 @@ function createDessertNamesChart() {
         FROM dogs
         WHERE name IS NOT NULL
         AND (
-        name LIKE 'Карамел%'
-        OR name = 'Карамел'
-        OR name LIKE 'Пудинг%'
-        OR name LIKE 'Тирамису%'
-        OR name LIKE 'Бискит%'
-        OR name LIKE 'Шоко%'
-        OR name LIKE 'Чоко%'
-        OR name LIKE 'Ванила%'
-        OR name LIKE 'Ванилия%'
-        OR name LIKE 'Брауни%'
-        OR name LIKE 'Айс Крийм%'
+        name LIKE 'Роза%'
+        OR name = 'Роза'
+        OR name LIKE 'Роуз%'
+        OR name LIKE 'Лили%'
+        OR name LIKE 'Нарцис%'
+        OR name LIKE 'Лимон%'
+        OR name LIKE 'Липа%'
+        OR name LIKE 'Явор%'
+        OR name LIKE 'Мак'
+        OR name LIKE 'Шипка%'
+        OR name LIKE 'Боровин%'
+        OR name LIKE 'Ирис%'
+        OR name LIKE 'Далия%'
+        OR name LIKE 'Черешка%'
+        OR name LIKE 'Чери%'
+        OR name LIKE '% босилек%'
+        OR name LIKE 'Лайка%'
+        OR name LIKE 'Роузмери%'
+        OR name LIKE 'Сакура%'
         )
         GROUP BY UNICODE_PROPER(name)
         ORDER BY count DESC
@@ -299,11 +435,11 @@ function createDessertNamesChart() {
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
 
-    const backgroundColors = generateColors(labels.length);
+    const backgroundColors = ["#f9bb5f", "#1cf178", "#fd5c3c"]//generateColors(labels.length);
 
-    new Chart(dessertCtx,
+    new Chart(plantCtx,
         {
-            type: 'doughnut',
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{

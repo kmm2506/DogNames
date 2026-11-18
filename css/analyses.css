@@ -55,7 +55,6 @@
 .name-content {
     display: grid;
     grid-template-rows: 50px minmax(0, 1fr);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 30px;
 
     background-color: #FFFFFF;
@@ -71,16 +70,17 @@
     margin: 0 0 25px;
 }
 
+.name-content canvas,
 .regional-content canvas {
     max-height: 500px;
     width: 100%;
 }
 
-.name-content canvas {
+/* .name-content canvas {
     width: 100% !important;
     height: auto !important;
     aspect-ratio: 1 / 1;
-}
+} */
 
 /* Вътрешна карта с филтри */
 .regional-filters-card {
