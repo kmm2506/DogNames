@@ -20,7 +20,7 @@
     flex-shrink: 0;
 }
 
-.region-selector input {
+.region-selector select {
     width: 100%;
     padding: 12px 15px;
     transform: translateX(-400px);
@@ -29,11 +29,6 @@
     background-color: #FFFFFF;
     color: #354D5D;
     font-size: 15px;
-}
-
-.region-selector input:focus {
-    outline: none;
-    border-color: #256D85;
 }
 
 .region-dropdown {

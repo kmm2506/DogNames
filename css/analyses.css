@@ -33,6 +33,7 @@
 }
 
 /* Голяма външна карта */
+.name-statistics,
 .regional-statistics {
     width: 100%;
     margin: 35px 0;
@@ -51,6 +52,18 @@
     box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
 }
 
+.name-content {
+    display: grid;
+    grid-template-rows: 50px minmax(0, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 50, 77, 0.08);
+}
+
 /* Лява част с диаграмата */
 .regional-chart h2 {
     color: #17324D;
@@ -61,6 +74,12 @@
 .regional-content canvas {
     max-height: 500px;
     width: 100%;
+}
+
+.name-content canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
 }
 
 /* Вътрешна карта с филтри */

@@ -54,13 +54,13 @@
                     <div class="card-icon"></div>
 
                     <!--Topic of the second map-->
-                    <h2>Интересни факти</h2>
+                    <h2>Различни имена</h2>
 
                     <!--info in numbers-->
-                    <p class="card-number">XXXX</p>
+                    <p class="card-number" id="differentNames">XXXX</p>
 
                     <p class="card-description">
-                        <!--Short info about the number-->
+                        Общ брой различни имена, които се срещат в базата данни.
                     </p>
                 </div>
             </div>
@@ -91,8 +91,16 @@
             const buffer = await response.arrayBuffer();
             db = new SQL.Database(new Uint8Array(buffer));
 
+            db.create_function('UNICODE_PROPER', (str) => {
+                if (!str) return '';
+                return str.split(' ').map(word => word.charAt(0).toLocaleUpperCase('bg-BG') + word.slice(1).toLocaleLowerCase('bg-BG')).join(' ');
+            });
+
             const dogCount = document.getElementById("registered-dogs-count");
             dogCount.textContent = db.exec("SELECT COUNT(*) FROM dogs")[0].values[0][0];
+
+            const nameCount = document.getElementById("differentNames");
+            nameCount.textContent = db.exec("SELECT COUNT(DISTINCT UNICODE_PROPER(name)) FROM dogs WHERE name IS NOT NULL")[0].values[0][0];
         }
     </script>
 
@@ -129,8 +137,6 @@
                     Университетски проект, посветен на
                     повторното използване на отворените данни.
                 </p>
-                <!--add sources-->
-                <p>Източници на данни:</p>
             </div>
 
         </div>

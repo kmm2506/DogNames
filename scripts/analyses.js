@@ -78,6 +78,11 @@ async function loadDatabase() {
         if (!str) return '';
         return str.split(' ').map(word => word.charAt(0).toLocaleUpperCase('bg-BG') + word.slice(1).toLocaleLowerCase('bg-BG')).join(' ');
     });
+    db.create_function('FIRST_WORD_PROPER', (str) => {
+        if (!str) return '';
+        const word = str.split(' ')[0];
+        return word.charAt(0).toLocaleUpperCase('bg-BG') + word.slice(1).toLocaleLowerCase('bg-BG');
+    })
 }
 
 function updateRegionalChart() {
@@ -186,7 +191,6 @@ function generateColors(numberOfColors, saturation = 90, lightness = 70) {
 }
 
 function createGreekNamesChart() {
-
     const selectedNames = `("Хера", "Арес", "Хадес", 
         "Зевс", "Посейдон", "Аполон", 
         "Венера", "Уран", "Гая", 
@@ -197,14 +201,6 @@ function createGreekNamesChart() {
         "Пенелопе", "Ахил", "Нестор",
         "Парис"
     )`;
-
-    // console.log(db.exec(`SELECT UNICODE_PROPER(name), COUNT(*) as count
-    //     FROM dogs
-    //     WHERE name IS NOT NULL
-    //     AND UNICODE_PROPER(name) IN ("Арчи", "Дон", "Брауни", "Макс")
-    //     GROUP BY UNICODE_PROPER(name)
-    //     ORDER BY count DESC`))
-
     const result = db.exec(`
         SELECT UNICODE_PROPER(name), COUNT(*) as count
         FROM dogs
@@ -214,14 +210,6 @@ function createGreekNamesChart() {
         ORDER BY count DESC
     `)[0].values;
 
-    //statement.bind([selectedNames]);
-
-    //const result = [];
-
-    // while (statement.step()) {
-    //     result.push(statement.get());
-    // }
-
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
 
@@ -229,33 +217,19 @@ function createGreekNamesChart() {
 
     new Chart(greekCtx,
         {
-            type: 'bar',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Брой кучета',
                     data: data,
                     backgroundColor: backgroundColors,
-                    borderWidth: 1
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
                     legend: {
                         display: false
-                    },
-                    title: {
-                        display: true,
-                        //text: 'Брой кучета с избрани имена'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        }
                     }
                 }
             }
@@ -264,80 +238,14 @@ function createGreekNamesChart() {
 }
 
 function createNamesWithTitleChart() {
-
-    // const selectedNames = `("Барон", "Дон", "Крал",
-    // "Цар", "Император", "Граф",
-    // "Принц", "Принцеса ", "Сър",
-    // "", "", "",
-    // )`;
-
-    // const result = db.exec(`
-    //     SELECT UNICODE_PROPER(name), COUNT(*) as count
-    //     FROM dogs
-    //     WHERE name IS NOT NULL
-    //     AND UNICODE_PROPER(name) IN ${selectedNames}
-    //     GROUP BY UNICODE_PROPER(name)
-    //     ORDER BY count DESC
-    // `)[0].values;
-
-    const result = db.exec(`
-        SELECT UNICODE_PROPER(name), COUNT(*) as count
-        FROM dogs
-        WHERE name IS NOT NULL
-        AND (
-        name LIKE 'Дон %'
-        OR name LIKE '% Дон %'
-        OR name LIKE '% Дон'
-        OR name = 'Дон'
-        OR name LIKE 'Крал %'
-        OR name LIKE '% Крал %'
-        OR name LIKE '% Крал'
-        OR name = 'Крал'
-        OR name LIKE 'Цар %'
-        OR name LIKE '% Цар %'
-        OR name LIKE '% Цар'
-        OR name = 'Цар'
-        OR name LIKE 'Император %'
-        OR name LIKE '% Император %'
-        OR name LIKE '% Император'
-        OR name = 'Император'
-        OR name LIKE 'Граф %'
-        OR name LIKE '% Граф %'
-        OR name LIKE '% Граф'
-        OR name = 'Граф'
-        OR name LIKE 'Принц %'
-        OR name LIKE '% Принц %'
-        OR name LIKE '% Принц'
-        OR name = 'Принц'
-        OR name LIKE 'Принцеса%'
-        OR name LIKE 'Сър %'
-        OR name LIKE '% Сър %'
-        OR name LIKE '% Сър'
-        OR name = 'Сър'
-        
-        OR name LIKE 'Лейди%'
-        
-        OR name LIKE 'Сеньорита %'
-        OR name LIKE '% Сеньорита %'
-        OR name LIKE '% Сеньорита'
-        OR name = 'Сеньорита'
-        OR name LIKE 'Мис %'
-        OR name LIKE '% Мис %'
-        OR name LIKE '% Мис'
-        OR name = 'Мис'
-        OR name LIKE 'Ms%'
-        OR name LIKE '% Ms %'
-        OR name LIKE '% Ms'
-        OR name = 'Ms'
-        OR name LIKE 'Mr%'
-        OR name = 'Mr'
-        OR name LIKE 'Мистър%'
-        OR name = 'Мистър'
-
-        )
-        GROUP BY UNICODE_PROPER(name)
-        ORDER BY count DESC
-    `)[0].values;
+    const result = db.exec(
+        `SELECT FIRST_WORD_PROPER(name) as prefix,
+        COUNT(*) as count FROM dogs
+        WHERE name IS NOT NULL AND prefix IN
+        ('Дон', 'Крал', 'Цар', 'Император', 'Граф', 'Принц', 'Принцеса', 'Сър', 'Лейди', 'Сеньорита', 'Мис', 'Ms', 'Mr', 'Мистър')
+        GROUP BY prefix
+        ORDER BY count DESC`
+    )[0].values;
 
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
@@ -346,33 +254,19 @@ function createNamesWithTitleChart() {
 
     new Chart(titlesCtx,
         {
-            type: 'bar',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Брой кучета',
                     data: data,
                     backgroundColor: backgroundColors,
-                    borderWidth: 1
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
                     legend: {
                         display: false
-                    },
-                    title: {
-                        display: true,
-                        text: 'Брой кучета с избрани имена'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        }
                     }
                 }
             }
@@ -402,14 +296,6 @@ function createDessertNamesChart() {
         ORDER BY count DESC
     `)[0].values;
 
-    //statement.bind([selectedNames]);
-
-    //const result = [];
-
-    // while (statement.step()) {
-    //     result.push(statement.get());
-    // }
-
     const labels = result.map(row => row[0]);
     const data = result.map(row => row[1]);
 
@@ -417,33 +303,19 @@ function createDessertNamesChart() {
 
     new Chart(dessertCtx,
         {
-            type: 'bar',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Брой кучета',
                     data: data,
                     backgroundColor: backgroundColors,
-                    borderWidth: 1
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
                     legend: {
                         display: false
-                    },
-                    title: {
-                        display: true,
-                        //text: 'Брой кучета с избрани имена'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        }
                     }
                 }
             }
